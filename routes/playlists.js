@@ -36,7 +36,7 @@ playlistRouter.post('/', (req, res) => {
         if (err) {res.status(500).send('Error posting playlist')
     } else {
         const playlistId = result.insertId
-        const createdPlaylist = { ...req.body }
+        const createdPlaylist = { ...req.body, playlistId}
         res.status(201).json(createdPlaylist)
     }
     })
