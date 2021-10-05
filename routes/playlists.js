@@ -13,6 +13,20 @@ const sql = `SELECT * FROM playlist`
     })  
 })
 
+// Get one
+
+playlistRouter.get('/:id', (req, res) => {
+    const playlistId = req.params.id
+    const sql = `SELECT * FROM playlist WHERE id = ?`
+    const value = [playlistId]
+    mysql.query(sql, value, (err, result) => {
+        if (err) res.status(500).send('Error retrieving playlist')
+        else res.status(200).json(result)
+    })
+})
+
+// Create 
+
 playlistRouter.post('/', (req, res) => {
     const { title, genre } = req.body
     const sql = `INSERT INTO playlist
