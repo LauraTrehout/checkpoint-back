@@ -17,7 +17,7 @@ trackRouter.get("/", (req, res) => {
 trackRouter.post("/", (req, res) => {
   const { title, artist, image, link, playlist } = req.body;
   const sql = `INSERT INTO track 
-    (title, artist, album_picture, youtube_url, playlist_id) VALUES(?,?,?,?,?)`;
+    (track_title, artist, album_picture, youtube_url, playlist_id) VALUES(?,?,?,?,?)`;
   const values = [title, artist, image, link, playlist];
   mysql.query(sql, values, (err, result) => {
     if (err) {
