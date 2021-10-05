@@ -26,7 +26,7 @@ playlistRouter.get("/:id", (req, res) => {
 
 // Get one with associated tracks
 
-playlistRouter.get("/tracks/:id", (req, res) => {
+playlistRouter.get("/:id/tracks", (req, res) => {
   const playlistId = req.params.id;
   mysql.query(
     `SELECT p.*, t.track_title, t.artist, t.album_picture, t.youtube_url
@@ -79,6 +79,18 @@ playlistRouter.post("/", (req, res) => {
     }
   });
 });
+
+// Update 
+
+playlistRouter.put('/:id', (req, res) => {
+    const playlistId = req.params.id
+    const sql = `UPDATE playlist SET ? WHERE id = ?`
+     const values = [req.body, playlistId]
+     mysql.query(sql, values, (err, result) => {
+         if (err) res.status(500).send('Error updating playlist')
+         else res.status(200).json(result)
+     })
+})
 
 // Delete 
 
