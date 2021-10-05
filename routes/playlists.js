@@ -2,11 +2,16 @@ const express = require("express");
 const mysql = require("../config/db");
 const playlistRouter = express.Router();
 
-// Get al lplaylists
+// Get all playlists
 
 playlistRouter.get("/", (req, res) => {
   const sql = `SELECT * FROM playlist`;
-  mysql.query(sql, (err, result) => {
+  const values = []
+  if (req.query.genre) {
+      sql += 'WHERE genre = ?'
+      values.push(req.query.genre)
+  }
+  mysql.query(sql, values, (err, result) => {
     if (err) res.status(500).send("Error retrieving playlists");
     else res.status(200).json(result);
   });

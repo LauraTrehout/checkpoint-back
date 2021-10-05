@@ -30,4 +30,27 @@ trackRouter.post("/", (req, res) => {
   });
 });
 
+// Update
+
+trackRouter.put("/:id", (req, res) => {
+  const trackId = req.params.id;
+  const sql = `UPDATE track SET ? WHERE id = ?`;
+  const values = [req.body, trackId];
+  mysql.query(sql, values, (err, result) => {
+    if (err) res.status(500).send("Error updating track");
+    else res.status(200).json(req.body);
+  });
+});
+
+
+// Delete
+
+trackRouter.delete("/:id", (req, res) => {
+  const trackId = req.params.id;
+  mysql.query(`DELETE FROM track WHERE id = ?`, [trackId], (err) => {
+    if (err) res.status(500).send("Error deleting playlist");
+    else res.status(200).send("Track deleted");
+  });
+});
+
 module.exports = trackRouter;
